@@ -1,11 +1,11 @@
 # Created by Jason Smith
-# Started August 18, 2022
+# August 18, 2022
 
 # Description: The purpose of this program is to store and display a catalog of
 # owned "Magic: The Gathering" cards in my collection.
 
 import tkinter as tk
-from tkinter import StringVar, ttk
+from tkinter import Menubutton, StringVar, ttk, Menu
 from tkinter.messagebox import showinfo
         
         
@@ -13,9 +13,8 @@ class MainFrame(ttk.Frame):
     """Represents a frame instance and inherits from ttk.Frame."""
     def __init__(self, container):
         super().__init__(container)
-        
-        options = {'padx': 5, 'pady': 5}
-        
+        options = {'pady': 5}
+               
         # top label
         self.label = ttk.Label(self, text='Enter the name of the card:')
         self.label.pack(**options)
@@ -26,9 +25,9 @@ class MainFrame(ttk.Frame):
         self.card_entry.pack()
         
         # button for card name
-        self.button = ttk.Button(self, text='A button. For clicking.')
-        self.button['command'] = self.button_clicked
-        self.button.pack(**options)
+        self.card_name_button = ttk.Button(self, text='A button. For clicking.')
+        self.card_name_button['command'] = self.submit_name_button_clicked
+        self.card_name_button.pack(**options)
         
         # show the frame on the container
         self.pack(**options)
@@ -41,7 +40,7 @@ class MainFrame(ttk.Frame):
         #    self.submit_name_button.state(['disabled'])
         #else:
         #    self.submit_name_button.state(['!disabled'])
-            
+        
         
 class App(tk.Tk):
     """Represents an app instance and inherits from tkinter."""
@@ -52,11 +51,26 @@ class App(tk.Tk):
         self.title("Magic Card Catalog")
         self.geometry('800x500')
         
+        # file menu
+        self.menubar = Menu(self)
+        self.file_menu = Menu(self, tearoff=False)
+        
+        self.file_menu.add_command(label='Create New File')
+        self.file_menu.add_command(label='Open Existing File')
+        self.file_menu.add_command(label='Close Current File')
+        
+        self.file_menu.add_separator()
+        
+        self.file_menu.add_command(label='Exit', command=self.quit)
+        self.menubar.add_cascade(label='File', menu=self.file_menu)
+        self.config(menu=self.menubar)
+        
         
 def main():
     """"""
     app = App()
     frame = MainFrame(app)
+    
     app.mainloop()
 
 
