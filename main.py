@@ -25,7 +25,7 @@ class MainFrame(ttk.Frame):
         self.card_entry.pack()
         
         # button for card name
-        self.card_name_button = ttk.Button(self, text='A button. For clicking.')
+        self.card_name_button = ttk.Button(self, text='Submit Card Name')
         self.card_name_button['command'] = self.submit_name_button_clicked
         self.card_name_button.pack(**options)
         
@@ -55,7 +55,8 @@ class App(tk.Tk):
         self.menubar = Menu(self)
         self.file_menu = Menu(self, tearoff=False)
         
-        self.file_menu.add_command(label='Create New File')
+        self.file_menu.add_command(label='Create New File', 
+                                   command=self.create_new_file)
         self.file_menu.add_command(label='Open Existing File')
         self.file_menu.add_command(label='Close Current File')
         
@@ -65,9 +66,21 @@ class App(tk.Tk):
         self.menubar.add_cascade(label='File', menu=self.file_menu)
         self.config(menu=self.menubar)
         
+    def create_new_file(self):
+        """"""
+        with open('Documents/Magic_Card_Catalog.txt', 'w') as f:
+            f.write('Creatting text file...')
+    
+    def open_existing_file(self):
+        """"""
+        pass
+
+    def close_current_file(self):
+        """"""
+        pass        
         
 def main():
-    """"""
+    """Main loop function."""
     app = App()
     frame = MainFrame(app)
     
