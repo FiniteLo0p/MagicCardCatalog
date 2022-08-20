@@ -4,8 +4,11 @@
 # Description: The purpose of this program is to store and display a catalog of
 # owned "Magic: The Gathering" cards in my collection.
 
+from fileinput import filename
 import tkinter as tk
 from tkinter import Menubutton, StringVar, ttk, Menu
+from tkinter import messagebox
+from tkinter.filedialog import askopenfilename
 from tkinter.messagebox import showinfo
         
         
@@ -51,14 +54,16 @@ class App(tk.Tk):
         self.title("Magic Card Catalog")
         self.geometry('800x500')
         
-        # file menu
+        # menubar
         self.menubar = Menu(self)
         self.file_menu = Menu(self, tearoff=False)
         
         self.file_menu.add_command(label='Create New File', 
                                    command=self.create_new_file)
-        self.file_menu.add_command(label='Open Existing File')
-        self.file_menu.add_command(label='Close Current File')
+        self.file_menu.add_command(label='Open Existing File', 
+                                   command=self.open_existing_file)
+        self.file_menu.add_command(label='Close Current File', 
+                                   command=self.close_current_file)
         
         self.file_menu.add_separator()
         
@@ -67,17 +72,20 @@ class App(tk.Tk):
         self.config(menu=self.menubar)
         
     def create_new_file(self):
-        """"""
-        with open('Documents/Magic_Card_Catalog.txt', 'w') as f:
-            f.write('Creatting text file...')
-    
+        """Takes no parameters and create a new card catalog file."""
+        with open('card_catalog.txt', 'w') as file:
+            file.write('text here')
+           
     def open_existing_file(self):
-        """"""
-        pass
+        """Takes no parameters and opens an existing card catalog file."""
+        filename = askopenfilename()
+        print(filename) 
 
-    def close_current_file(self):
-        """"""
-        pass        
+    def close_current_file(self, file_name):
+        """Takes no parameter parameter and closes card catalog file."""
+        messagebox.askokcancel('Are you sure?', 'Are you sure you want to \n'
+                            'close this file? Any unsaved data will be lost.')
+        
         
 def main():
     """Main loop function."""
